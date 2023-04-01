@@ -29,9 +29,6 @@ public class ConnectionServiceImpl implements ConnectionService {
        }
        else{
            List<ServiceProvider>serviceProviderList=user.getServiceProviderList();
-           if (serviceProviderList.isEmpty()){
-               throw new Exception("Unable to connect");
-           }
            ServiceProvider tempService=null;
            int minId=Integer.MAX_VALUE;
            String code="";
@@ -72,6 +69,7 @@ public class ConnectionServiceImpl implements ConnectionService {
             }
             user.setMaskedIp(null);
             user.setConnected(false);
+            userRepository2.save(user);
             return user;
     }
     @Override
