@@ -54,7 +54,7 @@ public class ConnectionServiceImpl implements ConnectionService {
            connection.setUser(user);
            connection.setServiceProvider(tempService);
            user.setConnected(true);
-           user.setMaskedIp(code+tempService.getId()+userId);
+           user.setMaskedIp(code+"."+tempService.getId()+"."+userId);
            List<Connection>connectionList=user.getConnectionList();
            connectionList.add(connection);
            List<Connection>connections=tempService.getConnectionList();
