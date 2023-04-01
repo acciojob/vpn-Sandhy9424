@@ -76,6 +76,9 @@ public class ConnectionServiceImpl implements ConnectionService {
     public User communicate(int senderId, int receiverId) throws Exception {
         User sender=userRepository2.findById(senderId).get();
         User receiver=userRepository2.findById(receiverId).get();
+        if(receiver==null||sender==null){
+            throw new Exception("Cannot establish communication");
+        }
         if(receiver.getConnected()){
             if(sender.getOriginalCountry().getCode().equals(sender.getMaskedIp().substring(0,4))){
                 return sender;
