@@ -24,7 +24,7 @@ public class ConnectionServiceImpl implements ConnectionService {
        User user=userRepository2.findById(userId).get();
        if(user.getConnected()==true){
            throw new Exception("Already connected");
-       } else if (user.getCountry().toString().equalsIgnoreCase(countryName)) {
+       } else if (user.getOriginalCountry().toString().equalsIgnoreCase(countryName)) {
            return user;
        }
        else{
@@ -79,7 +79,7 @@ public class ConnectionServiceImpl implements ConnectionService {
         User sender=userRepository2.findById(senderId).get();
         User receiver=userRepository2.findById(receiverId).get();
         if(receiver.getConnected()){
-            if(sender.getCountry().getCode().equals(sender.getMaskedIp().substring(0,4))){
+            if(sender.getOriginalCountry().getCode().equals(sender.getMaskedIp().substring(0,4))){
                 return sender;
             }
             else{
@@ -97,7 +97,7 @@ public class ConnectionServiceImpl implements ConnectionService {
                 }
                 try {
                     sender = connect(senderId, countryName);
-                    if (sender.getCountry().getCode().equals(sender.getMaskedIp().substring(0, 4))) {
+                    if (sender.getOriginalCountry().getCode().equals(sender.getMaskedIp().substring(0, 4))) {
                         return sender;
                     } else {
                         throw new Exception("Cannot establish communication");
@@ -107,13 +107,13 @@ public class ConnectionServiceImpl implements ConnectionService {
                 }
             }
         } else if (receiver.getConnected() == false) {
-            if(sender.getCountry().getCountryName().toString().equals(receiver.getCountry().getCountryName().toString())){
+            if(sender.getOriginalCountry().getCountryName().toString().equals(receiver.getOriginalCountry().getCountryName().toString())){
                 return sender;
             }
             else{
                  try{
-                     sender=connect(senderId,receiver.getCountry().getCountryName().toString());
-                     if(sender.getCountry().getCountryName().toString().equals(receiver.getCountry().getCountryName().toString())){
+                     sender=connect(senderId,receiver.getOriginalCountry().getCountryName().toString());
+                     if(sender.getOriginalCountry().getCountryName().toString().equals(receiver.getOriginalCountry().getCountryName().toString())){
                          return sender;
                      }
                      else{
